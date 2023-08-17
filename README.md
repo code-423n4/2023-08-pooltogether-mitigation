@@ -18,8 +18,8 @@ Mitigations of all High and Medium issues will be considered in-scope and listed
 - [H-03: _amountOut is representing assets and shares at the same time in the liquidate function](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/427)
 - [H-04: Vault.mintYieldFee FUNCTION CAN BE CALLED BY ANYONE TO MINT Vault Shares TO ANY RECIPIENT ADDRESS](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/396)
 - [H-05: Delegated amounts can be forcefully removed from anyone in the TwabController](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/351)
-- [H-06: More shares can be minted than underlying assets available, rendering Vault.sol undercollateralized as a result](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/190)
-- [H-07: Resetting delegation will result in user funds being lost forever](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/206)
+- [H-06: Resetting delegation will result in user funds being lost forever](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/206)
+- [H-07: More shares can be minted than underlying assets available, rendering Vault.sol undercollateralized as a result](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/190)
 - [H-08: Increasing reserves breaks PrizePool accounting](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/147)
 - [H-09: Vault is not compatible with some erc4626 vaults](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/79)
 - [M-01: Unintended or Malicious Use of Prize Winners' Hooks](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/465)
@@ -80,8 +80,8 @@ Mitigations of all High and Medium issues will be considered in-scope and listed
 | [VAULT-PR-6](https://github.com/GenerationSoftware/pt-v5-vault/pull/6) | [H-03](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/427) | Fixed conversion and naming of field |
 | [VAULT-PR-7](https://github.com/GenerationSoftware/pt-v5-vault/pull/7)| [H-04](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/396) | Removed recipient param |
 | [VAULT-PR-19](https://github.com/GenerationSoftware/pt-v5-vault/pull/19) | [H-05](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/351) | Removed recipient param |
-| [VAULT-PR-13](https://github.com/GenerationSoftware/pt-v5-vault/pull/13) | [H-06](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/190) | Fixed check for partial collateralization |
-| [TWAB-PR-7](https://github.com/GenerationSoftware/pt-v5-twab-controller/pull/7) | [H-07](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/206) | Added check for zero address |
+| [TWAB-PR-7](https://github.com/GenerationSoftware/pt-v5-twab-controller/pull/7) | [H-06](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/206) | Added check for zero address |
+| [VAULT-PR-13](https://github.com/GenerationSoftware/pt-v5-vault/pull/13) | [H-07](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/190) | Fixed check for partial collateralization |
 | [PRIZE-PR-18](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/18) | [H-08](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/147) | Fixed reserve accounting |
 | [VAULT-PR-27](https://github.com/GenerationSoftware/pt-v5-vault/pull/27) | [H-09](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/79) | Fixed undercollateralized redemption while providing an exit |
 | [VAULT-PR-21](https://github.com/GenerationSoftware/pt-v5-vault/pull/21) | [M-01](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/465) | Added hook gas limits and error handling |
