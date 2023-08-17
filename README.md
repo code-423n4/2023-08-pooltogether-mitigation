@@ -18,7 +18,7 @@ Mitigations of all High and Medium issues will be considered in-scope and listed
 - [H-03: _amountOut is representing assets and shares at the same time in the liquidate function](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/427)
 - [H-04: Vault.mintYieldFee FUNCTION CAN BE CALLED BY ANYONE TO MINT Vault Shares TO ANY RECIPIENT ADDRESS](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/396)
 - [H-05: Delegated amounts can be forcefully removed from anyone in the TwabController](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/351)
-- [H-06: More shares can be minted than underlying assets available, rendering Vault.sol undercollateralized as a result](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/307)
+- [H-06: More shares can be minted than underlying assets available, rendering Vault.sol undercollateralized as a result](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/190)
 - [H-07: Resetting delegation will result in user funds being lost forever](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/206)
 - [H-08: Increasing reserves breaks PrizePool accounting](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/147)
 - [H-09: Vault is not compatible with some erc4626 vaults](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/79)
@@ -50,27 +50,68 @@ Mitigations of all High and Medium issues will be considered in-scope and listed
 - [M-26: Transfer of Vault tokens can cause accounting errors in other contracts](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/91)
 - [M-27: Inconsistent behavior for canary claims in claimer](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/61)
 
-
-[ ⭐️ SPONSORS ADD INFO HERE ]
-
 ## Overview of changes
 
-Please provide context about the mitigations that were applied if applicable and identify any areas of specific concern.
+- Twab Controller now checks query timestamps for safety. When requesting a twab, timestamps:
+    1. are required to be finalized; i.e. cannot occur during an overwrite period
+    2. are aligned to period boundaries.
+- Tier adjustment algorithm
+    1. The canary tier has been simplified, so that the prize size is adjusted instead of the number of prizes. Now the unified claim count across normal + canary tiers is used to determine the next number of tiers.
+- Vault exchange rate
+    1. The Vault now assumes shares are 1:1 with underlying assets, unless the vault is undercollateralized. No exchange rate is stored.
 
 ## Mitigations to be reviewed
 
 ### Branch
-[ ⭐️ SPONSORS ADD A LINK TO THE BRANCH IN YOUR REPO CONTAINING ALL PRS ]
+
+- [pt-v5-prize-pool](https://github.com/GenerationSoftware/pt-v5-prize-pool)
+- [pt-v5-twab-controller](https://github.com/GenerationSoftware/pt-v5-twab-controller)
+- [pt-v5-vault](https://github.com/GenerationSoftware/pt-v5-vault)
+- [pt-v5-claimer](https://github.com/GenerationSoftware/pt-v5-claimer)
+
+(all PRs have been merged into main)
 
 ### Individual PRs
-[ ⭐️ SPONSORS ADD ALL RELEVANT PRs TO THE TABLE BELOW:]
-
-Wherever possible, mitigations should be provided in separate pull requests, one per issue. If that is not possible (e.g. because several audit findings stem from the same core problem), then please link the PR to all relevant issues in your findings repo. 
 
 | URL | Mitigation of | Purpose | 
 | ----------- | ------------- | ----------- |
-| https://github.com/your-repo/sample-contracts/pull/XXX | H-01 | This mitigation does XYZ | 
+| [VAULT-PR-13](https://github.com/GenerationSoftware/pt-v5-vault/pull/13) | [H-01](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/443) | The issue turned out not to be the case; the exchange rate is always <= 1 (yield is liquidated). However, comments were added to clarify the behaviour |
+| [VAULT-PR-9](https://github.com/GenerationSoftware/pt-v5-vault/pull/9) | [H-02](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/439) | Added SafeCast |
+| [VAULT-PR-6](https://github.com/GenerationSoftware/pt-v5-vault/pull/6) | [H-03](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/427) | Fixed conversion and naming of field |
+| [VAULT-PR-7](https://github.com/GenerationSoftware/pt-v5-vault/pull/7)| [H-04](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/396) | Removed recipient param |
+| [VAULT-PR-19](https://github.com/GenerationSoftware/pt-v5-vault/pull/19) | [H-05](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/351) | Removed recipient param |
+| [VAULT-PR-13](https://github.com/GenerationSoftware/pt-v5-vault/pull/13) | [H-06](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/190) | Fixed check for partial collateralization |
+| [TWAB-PR-7](https://github.com/GenerationSoftware/pt-v5-twab-controller/pull/7) | [H-07](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/206) | Added check for zero address |
+| [PRIZE-PR-18](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/18) | [H-08](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/147) | Fixed reserve accounting |
+| [VAULT-PR-27](https://github.com/GenerationSoftware/pt-v5-vault/pull/27) | [H-09](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/79) | Fixed undercollateralized redemption while providing an exit |
+| [VAULT-PR-21](https://github.com/GenerationSoftware/pt-v5-vault/pull/21) | [M-01](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/465) | Added hook gas limits and error handling |
+| [TWAB-PR-5](https://github.com/GenerationSoftware/pt-v5-twab-controller/pull/5) | [M-02](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/464) | Ensure search timestamps are on or at period end timestamps |
+| [VAULT-PR-11](https://github.com/GenerationSoftware/pt-v5-vault/pull/11) | [M-03](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/458) | Fixed 4626 compliance |
+| [TWAB-PR-6](https://github.com/GenerationSoftware/pt-v5-twab-controller/pull/6) | [M-04](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/452) | Reject transfers to the sponsorship address |
+| [PRIZE-PR-31](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/31) | [M-05](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/431) | Record deployer and permission draw manager |
+| [VAULT-PR-25](https://github.com/GenerationSoftware/pt-v5-vault/pull/25) | [M-06](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/416) | Used CREATE2 for VaultFactory |
+| [CLAIMER-PR-7](https://github.com/GenerationSoftware/pt-v5-claimer/pull/7) | [M-07](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/415) | Made max fee a function of the tier's prize size, not the smallest prize size |
+| [PRIZE-PR-16](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/16) | [M-08](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/399) | Improved handling of prize size overflow |
+| [PRIZE-COMMIT-ba56ea8b](https://github.com/GenerationSoftware/pt-v5-prize-pool/commit/ba56ea8bac3bce06f1e08ae071a19954dd720b1f) | [M-09](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/395) | Upgrade PRBMath to v4 and Solidity to 0.8.19 |
+| [VAULT-PR-15](https://github.com/GenerationSoftware/pt-v5-vault/pull/15) | [M-10](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/384) | Removed `mintWithPermit` |
+| [PRIZE-PR-24](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/24) | [M-11](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/352) | Recomputed Tier odds, reduced number of tiers, made grand prize period draws configurable |
+| [TWAB-PR-5](https://github.com/GenerationSoftware/pt-v5-twab-controller/pull/5) | [M-12](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/334) | Aligned twab queries on period boundaries |
+| [PRIZE-PR-17](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/17) | [M-13](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/332) | Superseceded by the simplification of tier expansion logic |
+| [PRIZE-PR-17](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/17) | [M-14](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/331) | Improved tier shrinking, retention, and expansion logic |
+| [PRIZE-PR-17](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/17) | [M-15](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/314) | Simplified tier expansion logic |
+| [VAULT-PR-27](https://github.com/GenerationSoftware/pt-v5-vault/pull/27) | [M-17](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/256) | Redeemed underlying liquidity using shares, not assets directly. This socializes losses, if any. |
+| [PRIZE-PR-22](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/22) | [M-19](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/243) | Added SafeCast |
+| [VAULT-PR-17](https://github.com/GenerationSoftware/pt-v5-vault/pull/18) | [M-20](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/180) | Vault shares are now 1:1 with underlying asset, and the exchange logic has been simplified |
+| [PRIZE-PR-10](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/10) | [M-21](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/150) | Draw query ends on closed draw |
+| [VAULT-PR-18](https://github.com/GenerationSoftware/pt-v5-vault/pull/18) | [M-22](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/143) | Improved vault share / asset calculation |
+| [VAULT-PR-11](https://github.com/GenerationSoftware/pt-v5-vault/pull/11) | [M-23](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/129) | Fixed compliance with 4626 |
+| [CLAIMER-PR-8](https://github.com/GenerationSoftware/pt-v5-claimer/pull/8) [VAULT-PR-22](https://github.com/GenerationSoftware/pt-v5-vault/pull/22) [PRIZE-PR-23](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/23) | [M-24](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/115) | Added minVrgdaFee and allowed silent failure of claims |
+| [VAULT-PR-20](https://github.com/GenerationSoftware/pt-v5-vault/pull/20) | [M-25](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/113) | Fixed permit implementations |
+| [VAULT-PR-9](https://github.com/GenerationSoftware/pt-v5-vault/pull/9) | [M-26](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/91) | Added SafeCast |
+| [PRIZE-PR-17](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/17) | [M-27](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/61) | Unified standard and canary tier |
 
 ## Out of Scope
 
-Please list any High and Medium issues that were judged as valid but you have chosen not to fix.
+| Issue | Reason |
+| ----- | ------ |
+| [M-16](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/300) | Permissionless nature of vaults means that anyone can create custom vaults. |
