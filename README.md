@@ -64,10 +64,10 @@ Mitigations of all High and Medium issues will be considered in-scope and listed
 
 ### Branch
 
-[pt-v5-prize-pool](https://github.com/GenerationSoftware/pt-v5-prize-pool)
-[pt-v5-twab-controller](https://github.com/GenerationSoftware/pt-v5-twab-controller)
-[pt-v5-vault](https://github.com/GenerationSoftware/pt-v5-vault)
-[pt-v5-claimer](https://github.com/GenerationSoftware/pt-v5-claimer)
+- [pt-v5-prize-pool](https://github.com/GenerationSoftware/pt-v5-prize-pool)
+- [pt-v5-twab-controller](https://github.com/GenerationSoftware/pt-v5-twab-controller)
+- [pt-v5-vault](https://github.com/GenerationSoftware/pt-v5-vault)
+- [pt-v5-claimer](https://github.com/GenerationSoftware/pt-v5-claimer)
 
 (all PRs have been merged into main)
 
