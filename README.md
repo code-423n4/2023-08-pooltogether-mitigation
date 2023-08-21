@@ -22,7 +22,6 @@ Mitigations of all High and Medium issues will be considered in-scope and listed
 - [H-07: _requireVaultCollateralized() is called at the beginning of the functions mintYieldFee() and liquidate()](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/190)
 - [H-08: Increasing reserves breaks PrizePool accounting](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/147)
 - [H-09: Vault is not compatible with some erc4626 vaults](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/79)
-- [M-01: IF THE UNDERLYING ASSET IS A FEE ON TRANSFER TOKEN IT COULD BREAK THE INTERNAL ACCOUNTING OF THE VAULT](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/470)
 - [M-02: Unintended or Malicious Use of Prize Winners' Hooks](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/465)
 - [M-03: TwabLib::getTwabBetween can return innacurate balances if _startTime and _endTime aren't safely bounded](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/464)
 - [M-04: deposit function does not check for the maxMint amount.](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/458)
@@ -113,4 +112,5 @@ Mitigations of all High and Medium issues will be considered in-scope and listed
 
 | Issue | Reason |
 | ----- | ------ |
+| [M-01](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/470) | Acknowledged issue but it will not be fixed. |
 | [M-17](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/300) | Permissionless nature of vaults means that anyone can create custom vaults. |
