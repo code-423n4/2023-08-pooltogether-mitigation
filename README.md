@@ -81,7 +81,7 @@ Mitigations of all High and Medium issues will be considered in-scope and listed
 | [TWAB-PR-7](https://github.com/GenerationSoftware/pt-v5-twab-controller/pull/7) | [H-06](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/206) | Added check for zero address |
 | [VAULT-PR-13](https://github.com/GenerationSoftware/pt-v5-vault/pull/13) | [H-07](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/190) | Fixed check for partial collateralization |
 | [PRIZE-PR-18](https://github.com/GenerationSoftware/pt-v5-prize-pool/pull/18) | [H-08](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/147) | Fixed reserve accounting |
-| [VAULT-PR-27](https://github.com/GenerationSoftware/pt-v5-vault/pull/27) | [H-09](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/79) | Fixed undercollateralized redemption while providing an exit |
+| [VAULT-PR-37](https://github.com/GenerationSoftware/pt-v5-vault/pull/37) | [H-09](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/79) | Fixed undercollateralized redemption while providing an exit |
 | [VAULT-PR-21](https://github.com/GenerationSoftware/pt-v5-vault/pull/21) | [M-02](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/465) | Added hook gas limits and error handling |
 | [TWAB-PR-5](https://github.com/GenerationSoftware/pt-v5-twab-controller/pull/5) | [M-03](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/464) | Ensure search timestamps are on or at period end timestamps |
 | [VAULT-PR-11](https://github.com/GenerationSoftware/pt-v5-vault/pull/11) | [M-04](https://github.com/code-423n4/2023-07-pooltogether-findings/issues/458) | Fixed 4626 compliance |
